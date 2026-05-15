@@ -1,7 +1,27 @@
+'use client'
+import { authClient, useSession } from "@/lib/auth-client";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function Header() {
+
+  const {
+    data: session,
+    // isPending, //loading state
+    error, //error object
+    // refetch //refetch the session
+  } = useSession()
+
+  const user = session?.user;
+  console.log(user);
+
+  console.log({session, error})
+
+  const handleSignOut = async () => {
+    await authClient.signOut();
+  }
+
+
   return (
     <header>
       <div className="navbar bg-base-100 shadow-sm mb-12">
@@ -69,11 +89,10 @@ export default function Header() {
                 <i className="fa-solid fa-book-open" /> Learn
               </a>
             </li>
-            <li>
-              <a href="#login" className="btn btn-outline btn-primary">
-                <i className="fa-solid fa-arrow-right-from-bracket" /> Logout
-              </a>
-            </li>
+            {
+              user ? <button onClick={handleSignOut} className="btn btn-primary btn-outline">Logout</button> :
+                <Link href={'/auth/login'} className="btn btn-primary btn-outline">Login</Link>
+            }
           </ul>
         </div>
       </div>

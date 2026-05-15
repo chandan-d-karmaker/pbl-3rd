@@ -13,12 +13,12 @@ const LoginPage = () => {
         const { data, error } = await authClient.signIn.email({
             ...userData,
 
-            callbackURL: "/mainpage",
+            callbackURL: "/",
         });
          console.log('signup data: ', { data, error });
 
         if (data) {
-            redirect('/mainpage');
+            redirect('/');
 
         }
         if (error) {
@@ -42,7 +42,7 @@ const LoginPage = () => {
                 <button className="btn btn-neutral mt-4">Login</button>
 
                 <div className='text-center mt-4'>
-                    <p>Not a member?  <Link href={'/signup'} className='font-semibold text-red-500'>Sign up now</Link> </p>
+                    <p>Not a member?  <Link href={'/auth/signup'} className='font-semibold text-red-500'>Sign up now</Link> </p>
                 </div>
             </form>
         </div>
